@@ -1,0 +1,12 @@
+VALUATION
+For finding the 'best' position for the hero based on a given state:
+  Given a set of rain objects, find the x coordinate within screen bounds that
+    maximizes horizontal distance from closest raindrops left+right OR
+    manhattan distance from hero center if there is no posn which has 0 rain overhead
+
+INPUTS
+
+(hero_posn, hero_speed,  [rain], optimal_posn, optimal_direction)
+
+OUTPUT
+(direction)
