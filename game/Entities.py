@@ -1,4 +1,4 @@
-import Const
+from . import Const
 import random
 
 class Entity():
@@ -31,7 +31,7 @@ class Entity():
             self.y = self.y + dy
 
 class Hero(Entity):
-    def __init__(self, x=0, y=0, vel_x=500, vel_y=0):
+    def __init__(self, x=0, y=0, vel_x=250, vel_y=0):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_HERO
         self.id = 'hero'
@@ -54,7 +54,7 @@ class Rain(Entity):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_RAIN
         self.id = drop_id
-        self.vel_y = random.randint(350, 750)
+        self.vel_y = random.randint(40, 50)
         self.length = 50
 
     def __str__(self):

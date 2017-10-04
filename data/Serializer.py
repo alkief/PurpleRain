@@ -1,9 +1,8 @@
-import Const
-# import json
+from game import Const
 
 class Serializer():
     def __init__(self):
-        self.file = 'game_trial.dat'
+        self.file = 'data/game_trial.dat'
         f = open(self.file, 'w')
 
     def write(self, state):

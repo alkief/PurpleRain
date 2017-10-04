@@ -17,7 +17,7 @@ class Collision():
 
         return isValid
 
-    def checkDeath(self, canvas, state):
+    def check_death(self, canvas, state):
         isDead = False
 
         player_widget = canvas.find_withtag(state.hero.id)

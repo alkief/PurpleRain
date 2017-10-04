@@ -2,7 +2,7 @@ from tkinter import Canvas, Frame, Button, Label, BOTH
 import tkinter as tk
 import threading
 
-import Const
+from . import Const
 
 class Window(tk.Frame):
     def __init__(self, master=None):
@@ -36,27 +36,24 @@ class Window(tk.Frame):
             # tuple is: (1, <x>, <y>, vel_x, vel_y, length, id')
             elif t[0] == Const.DRAW_RAIN:
                 self.canvas.create_line(t[1], t[2], t[1], t[2] + t[5], fill='purple', tags=t[6])
-            # Move item with a given unique tag by specified distance
-            # tuple is: (2, tag, dx, dy)
+            # # Move item with a given unique tag by specified distance
+            # # tuple is: (2, tag, dx, dy)
             elif t[0] == Const.MOVE_ENTITY:
                 # print('movement transition: ' + str(t))
                 entity = self.canvas.find_withtag(t[1])
                 # print('moving entity: ' + str(self.canvas.gettags(entity)) + ' to (' + str(t[2]) + ', ' + str(t[3]))
                 self.canvas.move(entity, t[2], t[3])
-            # Draw the initial score label
-            # tuple is: (3,)
+            # # Draw the initial score label
+            # # tuple is: (3,)
             elif t[0] == Const.DRAW_SCORE:
                 self.canvas.create_text(10, 10, anchor='nw', text='0', tags='score', fill='white')
-            # Update the score label
-            # tuple is: :(4, <updated-score>)
+            # # Update the score label
+            # # tuple is: :(4, <updated-score>)
             elif t[0] == Const.UPDATE_SCORE:
                 score_label = self.canvas.find_withtag('score')
                 self.canvas.itemconfig(score_label, text=str(t[1]))
 
-
-            self.update()
         # self.update_idletasks()
-
 
     # Display the main menu with 'Start' and 'Options' buttons
     # @Param start_game{function}: calls logic from engine to trigger game start
@@ -72,9 +69,6 @@ class Window(tk.Frame):
         optionBtn.config(width='10', activebackground='#33B5E5')
         self.canvas.create_window((self.width()/2) + 100, self.height()/2, window=optionBtn)
 
-        # self.refresh()  # Show changes to canvas
-
-
     def width(self):
         return self.master.winfo_screenwidth() // 2
 
@@ -83,14 +77,9 @@ class Window(tk.Frame):
 
     def clear(self):
         self.canvas.delete('all')
-        # self.refresh()
-
-    def refresh(self):
-        print('in refresh')
-        print(self.master)
-        # while True:
-            # self.update_idletasks()
-
 
     def quit(self):
+        print('running quit')
+        self.in_game = False
+        self.is_hero_alive = False
         self.root.destroy()
