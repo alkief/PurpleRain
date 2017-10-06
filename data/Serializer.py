@@ -5,7 +5,7 @@ class Serializer():
         self.file = 'data/game_trial.dat'
         f = open(self.file, 'w')
 
-    def write(self, state):
+    def write(self, engine):
         with open(self.file, 'a') as f:
             f.write('#\n')
-            f.write(str(state))
+            f.write(str(engine))

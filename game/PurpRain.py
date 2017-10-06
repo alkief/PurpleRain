@@ -1,4 +1,3 @@
-
 from . import Engine
 from . import Const
 
@@ -7,31 +6,39 @@ import logging
 import time
 
 class PurpRain():
-    def __init__(self, step_mode=Const.TIMESTEP_VARIABLE, step_func=None):
-        self.engine = Engine.Engine(step_mode)
-        if step_func == None:
-            self.step_func = self.infinite_step
-        else:
-            self.step_func = step_func
+    def __init__(self, step_mode=Const.TIMESTEP_AUTO, controller=Const.CONTROLLER_PLAYER):
+        self.engine = Engine.Engine(step_mode, controller)
 
+    # Begin normal gameplay if the engine is configured with an automatic timestep
     def start(self):
         if self.engine.step_mode == Const.TIMESTEP_MANUAL:
-            t = threading.Thread(target=self.step_func, daemon=True)
-            t.start()
-            self.engine.window.mainloop()
-            # self.engine.window.mainloop()
+            pass
         else:
-            self.engine.window.mainloop()
+            self.engine.gameloop()
 
-    # infinitely step through the game, display updates then sleep 1/60th of a second
-    def infinite_step(self):
-        while True:
-            while self.engine.state == None:
-                time.sleep(1)
-                while self.engine.in_game == True:
-                    self.engine.step(0.1)
-                    time.sleep(0.0167) # 1/60 of a second
+    # Returns True iff the hero is flagged as alive, and the engine scene is
+    #       marked as in-game
+    def is_in_game(self):
+        if self.engine.scene == Const.SCENE_INGAME and self.engine.is_hero_alive == True:
+            return True
+        else:
+            return False
 
+    # Utility function to refresh the game screen
+    def refresh_screen(self):
+        self.engine.window.canvas.update()
+        self.engine.window.canvas.update_idletasks()
 
-    def n_step(self, n):
-        pass
+    # Defines a method by which some controller may advance the game in time
+    #       by some amount
+    # Returns a tuple containing:
+    #       The game state after stepping
+    #       The reward for stepping through the game with the given inputs
+    #       A boolean signaling whether the game is over (player lost)
+    def step(self, dt=0.1):
+        if self.engine.scene == Const.SCENE_INGAME and self.engine.is_hero_alive:
+            step_update = self.engine.step(dt)
+        else:
+            step_update = (0, 0, True)
+
+        return step_update

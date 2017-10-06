@@ -31,6 +31,10 @@ class Entity():
             self.y = self.y + dy
 
 class Hero(Entity):
+    # @Inherited{Entity} x
+    # @Inherited{Entity} y
+    # @Inherited{Entity} vel_x
+    # @Inherited{Entity} vel_y
     def __init__(self, x=0, y=0, vel_x=250, vel_y=0):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_HERO
@@ -49,7 +53,10 @@ class Hero(Entity):
 
 
 class Rain(Entity):
-
+    # @Inherited{Entity} x
+    # @Inherited{Entity} y
+    # @Inherited{Entity} vel_x
+    # @Inherited{Entity} vel_y
     def __init__(self, drop_id=None, x=0, y=0, vel_x=0, vel_y=-1):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_RAIN
