@@ -50,6 +50,8 @@ class Agent():
         total_episodes = 5000 #Set total number of episodes to train agent on.
         max_ep = 300000 # Highest score an episode can reach
         update_frequency = 5
+        random_eps = 1000
+        random_base = 0.25
 
         init = tf.initialize_all_variables()
         with tf.Session() as sess:
@@ -68,6 +70,10 @@ class Agent():
                 running_reward = 0
                 ep_history = []
                 state = self.app.engine.encode_state()
+
+                if random_base > 0:
+                    random_base -= 1/random_eps
+
                 for j in range(max_ep):
                     a = self.choose_action(sess, state)
                     self.app.engine.player_direction = a
@@ -84,7 +90,7 @@ class Agent():
                     ep_history.append([state, a, reward, new_state])
                     state = new_state
                     running_reward += reward
-                    time.sleep(0.5)
+                    # time.sleep(0.5)
                     if done == True:
                         ep_history = np.array(ep_history)
                         feed_dict={self.reward_holder:ep_history[:,2],
@@ -102,7 +108,7 @@ class Agent():
 
                         total_reward.append(running_reward)
                         total_length.append(j)
-                        # print(np.mean(total_reward[-100:]))
+                        print(np.mean(total_reward[-100:]))
                         time.sleep(3)
                         break
 

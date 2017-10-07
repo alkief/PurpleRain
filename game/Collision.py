@@ -28,12 +28,15 @@ class Collision():
         isDead = False
         if engine.is_hero_alive == True and engine.scene == Const.SCENE_INGAME:
             canv = engine.window.canvas
-            player_widget = canv.find_withtag(engine.state.hero.id)
-            player_bbox  = canv.bbox(player_widget)
-            overlap = canv.find_overlapping(player_bbox[0], player_bbox[1], player_bbox[2], player_bbox[3])
-            for x in overlap:
-                if 'rain' in canv.gettags(x):
-                    isDead = True
+            try:
+                player_widget = canv.find_withtag(engine.state.hero.id)
+                player_bbox  = canv.bbox(player_widget)
+                overlap = canv.find_overlapping(player_bbox[0], player_bbox[1], player_bbox[2], player_bbox[3])
+                for x in overlap:
+                    if 'rain' in canv.gettags(x):
+                        isDead = True
+            except:
+                pass
 
         return isDead
 

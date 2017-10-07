@@ -35,7 +35,7 @@ class Hero(Entity):
     # @Inherited{Entity} y
     # @Inherited{Entity} vel_x
     # @Inherited{Entity} vel_y
-    def __init__(self, x=0, y=0, vel_x=250, vel_y=0):
+    def __init__(self, x=0, y=0, vel_x=50, vel_y=0):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_HERO
         self.id = 'hero'
@@ -61,8 +61,8 @@ class Rain(Entity):
         Entity.__init__(self, x, y, vel_x, vel_y)
         self.type = Const.ENTITY_RAIN
         self.id = drop_id
-        self.vel_y = random.randint(40, 50)
-        self.length = 50
+        self.vel_y = random.randint(30, 40)
+        self.length = random.randint(10, 30)
 
     def __str__(self):
         return super().__str__() + ' ' + str(self.length)
